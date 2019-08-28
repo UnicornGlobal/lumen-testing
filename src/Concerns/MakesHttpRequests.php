@@ -338,8 +338,11 @@ trait MakesHttpRequests
             $cookies, $files, $server, $content
         );
 
+        $request = $this->app['request'] = Request::createFromBase($symfonyRequest);
+        $request->all($parameters);
+
         $response = $this->app->prepareResponse(
-            $this->app->handle(Request::createFromBase($symfonyRequest))
+            $this->app->handle($this->app['request'])
         );
         $this->response = $this->createTestResponse($response);
 
